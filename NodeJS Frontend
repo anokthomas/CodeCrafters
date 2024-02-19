@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Image Upload</title>
+</head>
+<body>
+    <h1>Webcam Image Upload</h1>
+    <div>
+        <video id="video" width="640" height="480" autoplay></video>
+        <button id="capture">Capture</button>
+    </div>
+    <form id="uploadForm">
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="submit" value="Upload">
+    </form>
+
+    <script>
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                const videoElement = document.getElementById('video');
+                videoElement.srcObject = stream;
+            })
+            .catch(error => console.error('Error accessing webcam:', error));
+
+        document.getElementById('capture').addEventListener('click', () => {
+            const videoElement = document.getElementById('video');
+            const canvas = document.createElement('canvas');
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+            const image = canvas.toDataURL('image/jpeg');
+            const name = document.getElementById('name').value;
+            uploadImage(image, name);
+        });
+
+        function uploadImage(image, name) {
+            fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image, name })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error uploading image:', error));
+        }
+
+    </script>
+</body>
+</html>
