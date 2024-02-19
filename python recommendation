@@ -2,17 +2,20 @@ import os
 import pickle
 from datetime import datetime, timedelta
 
+UPLOADS_FOLDER = 'uploads'
+ITEM_DATA_FILE = 'item_data.pkl'
+
 # Function to load or initialize data
 def load_data():
-    if os.path.exists("item_data.pkl"):
-        with open("item_data.pkl", "rb") as f:
+    if os.path.exists(ITEM_DATA_FILE):
+        with open(ITEM_DATA_FILE, "rb") as f:
             return pickle.load(f)
     else:
         return {}
 
 # Function to save data
 def save_data(data):
-    with open("item_data.pkl", "wb") as f:
+    with open(ITEM_DATA_FILE, "wb") as f:
         pickle.dump(data, f)
 
 # Function to recommend items with a minimum gap of 5 days
@@ -32,14 +35,6 @@ def update_last_accessed(data, item):
 
 # Main function
 def main():
-    items = {
-        "shirt.jpeg": None,
-        "pants.jpeg": None,
-        "jacket.jpeg": None,
-        "dress.jpeg": None,
-        # Add more items if needed
-    }
-
     data = load_data()
 
     while True:
@@ -56,7 +51,7 @@ def main():
         if item_choice.lower() == 'quit':
             break
         
-        if item_choice in items:
+        if item_choice in os.listdir(UPLOADS_FOLDER):
             update_last_accessed(data, item_choice)
             print(f"You accessed {item_choice}.")
         else:
