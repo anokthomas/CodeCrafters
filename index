@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothes Management</title>
+</head>
+<body>
+    <h1>Clothes Management</h1>
+    <form id="clothesForm">
+        <input type="file" id="imageInput" accept="image/*" required>
+        <input type="text" id="itemName" placeholder="Enter item name" required>
+        <button type="submit">Store Item</button>
+    </form>
+    <div id="recommendation"></div>
+
+    <script>
+        document.getElementById("clothesForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            formData.append("image", document.getElementById("imageInput").files[0]);
+            formData.append("itemName", document.getElementById("itemName").value);
+            
+            const response = await fetch("/store", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            alert(result.message);
+        });
+
+        async function getRecommendation() {
+            const response = await fetch("/recommend");
+            const result = await response.json();
+            const recommendationDiv = document.getElementById("recommendation");
+            recommendationDiv.innerHTML = "<h2>Recommended Item:</h2>" + result.message;
+        }
+
+        getRecommendation();
+    </script>
+</body>
+</html>
