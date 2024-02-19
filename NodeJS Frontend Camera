@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcam Image Upload</title>
+    <link rel="stylesheet" href="style3.css">
 </head>
 <body>
-    <h1>Webcam Image Upload</h1>
+    <div class="e1">Webcam Image Upload</div>
     <div>
-        <video id="video" width="640" height="480" autoplay></video>
-        <button id="capture">Capture</button>
+        <video id="video" autoplay class="e2"></video>
+        <button id="capture" class="e3">Capture</button>
     </div>
     <form id="uploadForm">
-        <input type="text" id="name" placeholder="Enter Name">
-        <input type="submit" value="Upload">
+        <input type="submit" value="Upload" class="a">
+        <input type="text" id="name" placeholder="Enter Name" class="e4">
     </form>
 
     <script>
@@ -51,4 +52,5 @@
 
     </script>
 </body>
+</html>
 </html>
