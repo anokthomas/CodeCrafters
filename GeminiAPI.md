@@ -17,18 +17,7 @@ if (isNaN(numberOfClothes) || numberOfClothes <= 0) {
     const colorOfCloth = prompt(`Enter the color of clothing #${i + 1}:`);
     const materialOfCloth = prompt(`Enter the material of clothing #${i + 1}:`);
 
-    // Create an object to represent the clothing item
-    const clothingItem = {
-      kind: kindOfCloth,
-      color: colorOfCloth,
-      material: materialOfCloth,
-    };
-
-    // Add the clothing item to the array
-    clothingArray.push(clothingItem);
   }
-
-  // Example usage:
   console.log("Added the following clothing items to the array:");
   console.log(clothingArray);
 }
@@ -39,7 +28,7 @@ async function run() {
 
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-  const prompt = "from Given the set of choices , give a one word answer for wearing with respect to current climatic conditions"
+  const prompt = "from Given the set of choices ${clothingArray.join(', ')} , give a one word answer for wearing with respect to current climatic conditions"
 
   const result = await model.generateContent(prompt);
   const response = await result.response;
