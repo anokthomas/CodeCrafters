@@ -1,0 +1,19 @@
+from flask import Flask, request, jsonify
+import base64
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    data = request.json
+    image_data = data['image']
+    name = data['name']
+    # Convert base64 image to binary
+    image_binary = base64.b64decode(image_data)
+    # Store image and name (you can extend this to save in a database)
+    with open(f'{name}.jpg', 'wb') as file:
+        file.write(image_binary)
+    return jsonify({'message': 'Image uploaded successfully'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
