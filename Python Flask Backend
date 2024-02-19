@@ -17,3 +17,35 @@ def upload():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+
+
+
+
+// code 2
+from flask import Flask, request, jsonify
+import base64
+import os
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    data = request.json
+    image_data = data['image']
+    name = data['name']
+    # Convert base64 image to binary
+    image_binary = base64.b64decode(image_data)
+    # Ensure 'uploads' directory exists
+    if not os.path.exists('uploads'):
+        os.makedirs('uploads')
+    # Save image with provided name
+    with open(f'uploads/{name}.jpg', 'wb') as file:
+        file.write(image_binary)
+    return jsonify({'message': f'Image {name}.jpg uploaded successfully'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
