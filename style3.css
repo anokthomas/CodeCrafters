@@ -34,7 +34,7 @@ body{
     color: white;
     text-align: center;
     margin-left: 70%;
-    margin-top: -12.5%;
+    margin-top: -20%;
     height: 5%;
     padding-top: 1.5%;
 }
@@ -54,4 +54,13 @@ body{
     margin-left: -40%;
     margin-top: 380%;
     height: 5%;
+}
+.g1{
+    margin-top: 150%;
+    background-color:rgb(95, 32, 138)  ;
+    color: white;
+}
+.g3{
+    background-color: rgb(95, 32, 138);
+    color: white;
 }
