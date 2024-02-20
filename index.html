@@ -43,6 +43,14 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        /* Styles for recommended item images */
+        #recommendation img {
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -66,16 +74,27 @@
             });
             const result = await response.json();
             alert(result.message);
+
+            // After storing the item, fetch and display recommended items
+            getRecommendation();
         });
 
         async function getRecommendation() {
             const response = await fetch("/recommend");
             const result = await response.json();
             const recommendationDiv = document.getElementById("recommendation");
-            recommendationDiv.innerHTML = "<h2>Recommended Item:</h2>" + result.message;
+            recommendationDiv.innerHTML = "<h2>Recommended Items:</h2>";
+            
+            // Assuming result.message is an array of image URLs
+            result.message.forEach(function(imageUrl) {
+                const img = document.createElement("img");
+                img.src = imageUrl;
+                img.alt = "Recommended Item";
+                img.width = 200;
+                img.height = 200;
+                recommendationDiv.appendChild(img);
+            });
         }
-
-        getRecommendation();
     </script>
 </body>
 </html>
