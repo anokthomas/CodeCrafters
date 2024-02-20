@@ -62,6 +62,23 @@
     <div id="recommendation"></div>
 
     <script>
+        document.getElementById("imageInput").addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.alt = "Uploaded Image";
+                    img.width = 200;
+                    img.height = 200;
+                    document.getElementById("recommendation").innerHTML = "";
+                    document.getElementById("recommendation").appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
         document.getElementById("clothesForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             const formData = new FormData();
