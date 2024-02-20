@@ -1,59 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>User Authentication System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothes Management</title>
 </head>
 <body>
-  <form id="register-form">
-    <h2>Register</h2>
-    <label for="register-username">Username</label>
-    <input type="text" id="register-username" required>
-    <label for="register-password">Password</label>
-    <input type="password" id="register-password" required>
-    <button type="submit">Register</button>
-  </form>
+    <form id="clothesForm">
+        <input type="file" id="imageInput" accept="image/*" required>
+        <input type="text" id="itemName" placeholder="Enter item name" required>
+        <button type="submit">Store Item</button>
+    </form>
+    <div id="recommendation"></div>
 
-  <form id="login-form">
-    <h2>Login</h2>
-    <label for="login-username">Username</label>
-    <input type="text" id="login-username" required>
-    <label for="login-password">Password</label>
-    <input type="password" id="login-password" required>
-    <button type="submit">Login</button>
-  </form>
+    <script>
+        document.getElementById("clothesForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            formData.append("image", document.getElementById("imageInput").files[0]);
+            formData.append("itemName", document.getElementById("itemName").value);
+            
+            const response = await fetch("/store", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            alert(result.message);
+        });
 
-  <div id="token"></div>
+        async function getRecommendation() {
+            const response = await fetch("/recommend");
+            const result = await response.json();
+            const recommendationDiv = document.getElementById("recommendation");
+            recommendationDiv.innerHTML = "<h2>Recommended Item:</h2>" + result.message;
+        }
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    document.getElementById('register-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const username = document.getElementById('register-username').value;
-      const password = document.getElementById('register-password').value;
-
-      try {
-        const response = await axios.post('/register', { username, password });
-        document.getElementById('token').innerText = `Token: ${response.data.token}`;
-      } catch (error) {
-        console.error(error.response.data.error);
-      }
-    });
-
-    document.getElementById('login-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const username = document.getElementById('login-username').value;
-      const password = document.getElementById('login-password').value;
-
-      try {
-        const response = await axios.post('/login', { username, password });
-        document.getElementById('token').innerText = `Token: ${response.data.token}`;
-      } catch (error) {
-        console.error(error.response.data.error);
-      }
-    });
-  </script>
+        getRecommendation();
+    </script>
 </body>
 </html>
