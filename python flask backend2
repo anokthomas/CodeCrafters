@@ -1,0 +1,73 @@
+from flask import Flask, render_template, request, jsonify
+import os
+from datetime import datetime, timedelta
+from werkzeug.utils import secure_filename
+import pickle
+
+app = Flask(__name__)
+
+UPLOAD_FOLDER = 'uploads'
+ITEM_DATA_FILE = 'item_data.pkl'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Function to load or initialize data
+def load_data():
+    if os.path.exists(ITEM_DATA_FILE):
+        with open(ITEM_DATA_FILE, "rb") as f:
+            return pickle.load(f)
+    else:
+        return {}
+
+# Function to save data
+def save_data(data):
+    with open(ITEM_DATA_FILE, "wb") as f:
+        pickle.dump(data, f)
+
+# Function to recommend items with a minimum gap of 5 days
+def recommend_items(data):
+    today = datetime.now()
+    recommended_items = []
+    for item, last_accessed in data.items():
+        time_since_last_access = today - last_accessed
+        if time_since_last_access.days >= 0.00000001:
+            recommended_items.append(item)
+    return recommended_items
+
+# Function to update last accessed date of an item
+def update_last_accessed(data, item):
+    data[item] = datetime.now()
+    save_data(data)
+
+items = load_data()
+
+# Function to check if the file has an allowed extension
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/store', methods=['POST'])
+def store_item():
+    if 'image' not in request.files:
+        return jsonify({'message': 'No file part'})
+    
+    file = request.files['image']
+    if file.filename == '':
+        return jsonify({'message': 'No selected file'})
+    
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        item_name = request.form.get('itemName')
+        items[item_name] = datetime.now()
+        save_data(items)
+        return jsonify({'message': 'Item stored successfully'})
+    else:
+        return jsonify({'message': 'Invalid file format'})
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
