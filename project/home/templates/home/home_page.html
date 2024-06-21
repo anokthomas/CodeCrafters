@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load wagtailimages_tags %}
+{% load static %}
+{% block content %}
+{% image page.banner_background_image fill-1600x800 as bg_img %}
+<link rel="stylesheet" href="{% static 'project.css'%}">
+<style>
+    /* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin:0px; /* Added padding-top */
+  }
+  
+  /* Banner Styling */
+  .cc-home-banner {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    text-align: center;
+    margin-top:-30px;
+  }
+  
+  .cc-home-banner-title {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+  }
+  
+  .lead {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  /* Button Styling */
+  .cc-home-banner a {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin:3rem;
+  }
+  
+  .cc-home-banner a:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .cc-home-banner-title {
+      font-size: 3rem;
+    }
+  }
+  
+</style>
+<body class="a">
+    <div class="jumbotron jumbotron-fluid text-light py-5 d-flex align-items-center cc-home-banner" style='background: linear-gradient(180.43deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.80) 100%), url({{ bg_img.url }});'>
+        <div class="container">
+            <div class="row">
+                <div class="'col-xl-8 col-lg-9">
+                    <h1 class="'display-3 cc-home-banner-title">{{page.title}}</h1>
+                {% if page.lead_text %}
+                    <p class="lead">{{page.lead_text}}</p>
+                {% endif %}
+                {% if page.botton_text %}
+                    <p class="mt-3">
+                        <a href="http://localhost:8000/your-wardrobe/">{{page.botton_text}}</a>
+                
+                    </p>
+                    <p class="mt-3">
+                        <a href="http://localhost:8000/services/">OPEN MY STYLE</a>
+                
+                    </p>
+                    <p class="mt-3">
+                        <a href="http://localhost:8000/your-wardrobe/">ADD TO MY WARDROBE</a>
+                
+                    </p>
+                {% endif %}    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock content %}
+</body>

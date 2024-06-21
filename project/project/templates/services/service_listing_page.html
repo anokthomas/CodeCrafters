@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load wagtailimages_tags %}
+
+
+{% block content %}
+<style>
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: rgba(54,56,21);
+    color: white;
+    margin: 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Header Styling */
+  .cc-inner-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cc-inner-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Card Styling */
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #fff;
+    transition: transform 0.2s ease-in-out;
+    display: inline-block; /* Make cards display inline */
+    margin: 0 10px; /* Add some spacing between cards */
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 250px; /* Adjust height as needed */
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 2rem;
+    
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .card-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn-link {
+    font-weight: 600;
+  }
+  
+  /* Row Styling */
+  .row {
+    margin-bottom: 3rem;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .card {
+      width: 49%; /* Make cards take up full width on smaller screens */
+      margin: 10px 0; /* Add some spacing between cards */
+    }
+  }
+  @media (min-width: 768px) {
+    .card {
+      width: 22%; /* Make cards take up 24% of the width on larger screens */
+      margin: 0 10px; /* Add some spacing between cards */
+    }
+  }
+  @media (max-width: 576px) {
+    .card {
+      width: 99%; /* Make cards take up full width on smaller screens */
+      margin: 10px 0; /* Add some spacing between cards */
+    }
+  }
+  
+  
+</style>
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="cc-inner-title">&nbsp{{ page.title }}</h1>
+      {% if page.subtitle %}
+        <p class="cc-inner-subtitle">&nbsp{{ page.subtitle }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">  <!-- Changed to col-md-12 for full width -->
+        {% for card in services %}   
+      <div class="card mb-3 text-center"> 
+          <a href="{{ card.url }}">
+              <picture>
+                {% image card.service_image fill-573x369 as card_img %}
+                <img src="{{ card_img.url }}" alt="{{ card_img.alt }}" class="lazy card-img-top">
+              </picture>
+            </a>
+            <div class="card-body py-3 px-3">
+              <a href="{{ card.url }}">
+                <h5 class="card-title">{{ card.title }}</h5>
+                {% if card.description %}
+                  <p class="card-description">{{ card.description }}</p>
+                {% endif %}
+              </a>
+
+              <p class="card-text">
+                <a href="{{ card.url }}" class="btn btn-link d-inline">More Details</a>
+              </p>
+            </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+{% endblock %}
