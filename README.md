@@ -15,7 +15,11 @@ STEPS TO RUN THE PROGRAM:
 
 HERE ARE THE IMAGES OF THE WEBSITE
 
+HOME PAGE:
 ![Screenshot 2024-07-27 184151](https://github.com/user-attachments/assets/14392b79-b85f-4862-90d2-e23f6e6462a3)
+FOOTER:
 ![Screenshot 2024-07-27 193803](https://github.com/user-attachments/assets/3f43e12f-fdc8-4479-bdd2-09af823a288f)
+SERVICE PAGE:
 ![Screenshot 2024-07-27 184345](https://github.com/user-attachments/assets/8859ac63-a640-42e1-896b-657510a70029)
+SERVICE PAGE 2:
 ![Screenshot 2024-07-27 184449](https://github.com/user-attachments/assets/e64489e9-23f6-4c6c-94bc-665de98f3291)
