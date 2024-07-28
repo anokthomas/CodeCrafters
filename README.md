@@ -1,6 +1,8 @@
 Stylesifters is an innovative website that leverages AI to provide personalized clothing recommendations for daily life. The platform offers a user-friendly interface where users can upload their clothes and add items to their virtual wardrobe. The AI analyzes the uploaded clothing items, considering factors like weather, trends, and personal style preferences to suggest the perfect outfit for any occasion. With Stylesifters, you can effortlessly organize your wardrobe and receive tailored fashion advice to enhance your daily style.
+
 PREREQUITSITES:
 Install wagtail , django ,python ,javascript and pip in your command line server.
+
 STEPS TO RUN THE PROGRAM:
 1. CLONE THE FILES INTO YOUR VS CODE
 2. OPEN COMMAND LINE:
